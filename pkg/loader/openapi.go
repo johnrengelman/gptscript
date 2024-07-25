@@ -295,7 +295,9 @@ func getOpenAPITools(t *openapi3.T, defaultHost string) ([]types.Tool, error) {
 					if err != nil {
 						return nil, fmt.Errorf("failed to parse operation server URL: %w", err)
 					}
-					tool.Credentials = info.GetCredentialToolStrings(operationServerURL.Hostname())
+					for _, cred := range info.GetCredentialToolStrings(operationServerURL.Hostname()) {
+						tool.Credentials = append(tool.Credentials, cred)
+					}
 				}
 			}
 
